@@ -207,7 +207,7 @@
     display: flex; flex-direction: column-reverse; width: 100%;
     border-radius: 5px; overflow: hidden;
   }
-  .weekbar .seg { width: 100%; }
+  .weekbar .seg { width: 100%; border-top: 2px solid var(--card); }
   .weekbar-track { border-bottom: 1px solid var(--line); }
   .weekbar-labels { display: flex; gap: 8px; margin-top: 8px; }
   .weekbar-label { flex: 1; text-align: center; font-size: 0.66rem; color: var(--faint); letter-spacing: 0.1em; }
@@ -679,17 +679,18 @@
 /* ============ 定義 ============ */
 // protected: 睡眠・仕事は自由時間の計算に、その他は「残りを自動入力」に必要なため削除不可
 // 「移動」(id:commute) は自由時間の計算で仕事側に合算される
+// カテゴリ色: CVD(色覚多様性)検証済みパレット。その他だけは「残り」を表すニュートラル
 const DEFAULT_CATS = [
-  { id: "work",    name: "仕事",   color: "#3d3c39", protected: true },
-  { id: "commute", name: "移動",   color: "#93918c" },
-  { id: "sns",     name: "スマホ", color: "#6e6c68",
+  { id: "work",    name: "仕事",   color: "#2a78d6", protected: true },
+  { id: "commute", name: "移動",   color: "#1baf7a" },
+  { id: "sns",     name: "スマホ", color: "#eda100",
     hint: "実測は 設定 › スクリーンタイム で確認" },
-  { id: "sleep",   name: "睡眠",   color: "#cbc9c4", protected: true },
-  { id: "other",   name: "その他", color: "#e4e2dd", protected: true },
+  { id: "sleep",   name: "睡眠",   color: "#4a3aa7", protected: true },
+  { id: "other",   name: "その他", color: "#cfccc4", protected: true },
 ];
 const COLOR_POOL = [
-  "#57544f", "#a19e97", "#7f7d78", "#c1beb8", "#4a4844",
-  "#8b8880", "#d5d3ce", "#65625d", "#b8b5ae", "#33312e",
+  "#008300", "#e34948", "#e87ba4", "#eb6834", "#256abf",
+  "#199e70", "#c98500", "#9085e9", "#d55181", "#d95926",
 ];
 const MAX_CATS = 12;
 const STEP = 0.5;
@@ -745,9 +746,33 @@ function saveRules(rules) { localStorage.setItem(LS_RULES, JSON.stringify(rules)
 function loadCats() {
   try {
     const c = JSON.parse(localStorage.getItem(LS_CATS));
-    if (Array.isArray(c) && c.length) return c;
+    if (Array.isArray(c) && c.length) return migrateCatColors(c);
   } catch {}
   return JSON.parse(JSON.stringify(DEFAULT_CATS));
+}
+// 旧バージョン（モノトーン配色）で保存されたカテゴリを新しいカラーパレットに移行する
+function migrateCatColors(cats) {
+  const isGray = (hex) => {
+    const m = /^#([0-9a-f]{6})$/i.exec(hex || "");
+    if (!m) return true;
+    const n = parseInt(m[1], 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+    return Math.max(r, g, b) - Math.min(r, g, b) < 16;
+  };
+  let changed = false;
+  const used = new Set(cats.map(c => c.color));
+  cats.forEach(cat => {
+    const def = DEFAULT_CATS.find(d => d.id === cat.id);
+    if (def) {
+      if (cat.color !== def.color) { cat.color = def.color; changed = true; }
+    } else if (isGray(cat.color)) {
+      const col = COLOR_POOL.find(p => !used.has(p)) || "#898781";
+      used.add(col);
+      cat.color = col;
+      changed = true;
+    }
+  });
+  if (changed) localStorage.setItem(LS_CATS, JSON.stringify(cats));
+  return cats;
 }
 function saveCats() { localStorage.setItem(LS_CATS, JSON.stringify(CATS)); }
 function loadDreams() {
