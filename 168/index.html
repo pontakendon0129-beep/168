@@ -64,7 +64,7 @@
     font-family: Helvetica, Arial, sans-serif;
     font-weight: 800; font-size: 1.05rem; letter-spacing: 0.16em;
   }
-  .lb-yt { width: 26px; height: 19px; margin-left: 2px; flex-shrink: 0; }
+  .lb-yt { width: 26px; height: auto; margin-left: 2px; flex-shrink: 0; }
   .hamb {
     background: none; border: none; width: 42px; height: 42px; border-radius: 12px;
     cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink);
@@ -504,12 +504,14 @@
 </svg>
 
 <header>
+  <!-- ▼ 左上ロゴのリンク先：このアプリの紹介動画が公開できるまでは LAUNCH チャンネルトップ。
+       動画ができたら、下の href を「その動画のURL」に変えるだけ（aria-label も合わせて調整）。 -->
   <a class="launch-brand" href="https://www.youtube.com/@launch-jp" target="_blank" rel="noopener" aria-label="YouTubeチャンネル LAUNCH を開く">
     <svg class="lb-mark"><use href="#launch-mark"/></svg>
     <span class="lb-text">LAUNCH</span>
-    <svg class="lb-yt" viewBox="0 0 28 20" aria-hidden="true">
-      <rect x="0" y="0" width="28" height="20" rx="5" fill="#FF0000"/>
-      <path d="M11 6 L19 10 L11 14 Z" fill="#fff"/>
+    <svg class="lb-yt" viewBox="0 0 28.57 20" aria-hidden="true">
+      <path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 0 14.285 0 14.285 0C14.285 0 5.35042 0 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C0 5.35042 0 10 0 10C0 10 0 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5701 5.35042 27.9727 3.12324Z" fill="#FF0000"/>
+      <path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z" fill="#fff"/>
     </svg>
   </a>
   <button class="hamb" id="hamb" aria-label="アプリメニュー">
