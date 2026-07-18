@@ -243,20 +243,20 @@
     <div class="guide-vp" id="g-vp">
       <div class="guide-track" id="g-track">
 
-        <!-- スライド1：iPhone -->
+        <!-- スライド1：Safari -->
         <div class="guide-slide">
-          <div class="gs-title">iPhone に保存する</div>
-          <div class="gs-sub"><b>Safari</b> でこのページを開いた状態で。</div>
+          <div class="gs-title">Safari で保存する</div>
+          <div class="gs-sub"><b>Safari</b> でこのページを開いた状態で。（iPhone / iPad / Mac）</div>
           <div class="gstep"><span class="gstep-n">1</span><span class="gstep-b">画面下の <b>共有ボタン</b><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8.5 6.5 12 3l3.5 3.5"/><path d="M7 10.5H6.2A2.2 2.2 0 0 0 4 12.7v6.1A2.2 2.2 0 0 0 6.2 21h11.6a2.2 2.2 0 0 0 2.2-2.2v-6.1a2.2 2.2 0 0 0-2.2-2.2H17"/></svg> をタップ</span></div>
           <div class="gstep"><span class="gstep-n">2</span><span class="gstep-b">少し下にスクロールして <b>「ホーム画面に追加」</b> をタップ</span></div>
           <div class="gstep"><span class="gstep-n">3</span><span class="gstep-b">右上の <b>「追加」</b> をタップ</span></div>
           <div class="gnote">ホーム画面に <b>LAUNCH</b> のアイコンができ、アプリのように開けます。</div>
         </div>
 
-        <!-- スライド2：Android -->
+        <!-- スライド2：Chrome -->
         <div class="guide-slide">
-          <div class="gs-title">Android に保存する</div>
-          <div class="gs-sub"><b>Chrome</b> でこのページを開いた状態で。</div>
+          <div class="gs-title">Chrome で保存する</div>
+          <div class="gs-sub"><b>Chrome</b> でこのページを開いた状態で。（Android / パソコン）</div>
           <div class="gstep"><span class="gstep-n">1</span><span class="gstep-b">右上の <b>メニュー</b><svg class="ic-svg" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5.5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="18.5" r="1.7"/></svg> をタップ</span></div>
           <div class="gstep"><span class="gstep-n">2</span><span class="gstep-b"><b>「ホーム画面に追加」</b>（または「アプリをインストール」）をタップ</span></div>
           <div class="gstep"><span class="gstep-n">3</span><span class="gstep-b">確認が出たら <b>「追加」</b> をタップ</span></div>
@@ -309,8 +309,12 @@
   function open(start) { if (typeof start === 'number') i = start; scrim.classList.add('open'); render(); }
   function close() { scrim.classList.remove('open'); }
 
-  // OS判定：Androidなら2枚目(index1)、それ以外(iPhone等)は1枚目(index0)から
-  function startIndex() { return /android/i.test(navigator.userAgent || '') ? 1 : 0; }
+  // ブラウザ判定：Chrome系なら2枚目(Chrome=index1)、それ以外(Safari等)は1枚目(Safari=index0)から
+  function startIndex() {
+    var ua = navigator.userAgent || '';
+    var isChrome = /chrome|crios|crmo|edg|edga|edgios/i.test(ua);
+    return isChrome ? 1 : 0;
+  }
 
   nextBtn.addEventListener('click', function () { if (i < N - 1) goTo(i + 1); else close(); });
   dots.forEach(function (d, k) { d.addEventListener('click', function () { goTo(k); }); });
