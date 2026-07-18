@@ -108,6 +108,48 @@
   }
   footer .lb-mark { width: 14px; height: 19px; color: var(--sub); }
   footer .lb-text { font-size: 0.66rem; color: var(--sub); letter-spacing: 0.16em; }
+
+  /* ===== ホーム画面追加ガイド（モーダル） ===== */
+  .hint-open {
+    margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
+    background: var(--ink); color: #fff; border: none; font-family: inherit;
+    font-weight: 700; font-size: 0.76rem; padding: 9px 16px; border-radius: 999px; cursor: pointer;
+  }
+  .hint-open svg { width: 15px; height: 15px; }
+  .guide-scrim {
+    position: fixed; inset: 0; z-index: 100; display: none;
+    align-items: flex-end; justify-content: center; background: rgba(22,22,22,0.45);
+  }
+  .guide-scrim.open { display: flex; }
+  .guide-card {
+    background: var(--card); width: 100%; max-width: 480px;
+    border-radius: 24px 24px 0 0; box-shadow: 0 -10px 44px rgba(0,0,0,0.2);
+    padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
+    animation: guideUp .3s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes guideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .guide-grip { width: 40px; height: 4px; border-radius: 99px; background: var(--line); margin: 2px auto 6px; }
+  .guide-top { display: flex; justify-content: flex-end; }
+  .guide-close { background: none; border: none; font-size: 1.5rem; line-height: 1; color: var(--faint); width: 34px; height: 34px; cursor: pointer; }
+  .guide-vp { overflow: hidden; }
+  .guide-track { display: flex; transition: transform .32s cubic-bezier(.4,0,.2,1); }
+  .guide-slide { min-width: 100%; box-sizing: border-box; padding: 2px 2px 4px; }
+  .gs-title { font-size: 1.14rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  .gs-title .yt { width: 24px; height: auto; }
+  .gs-sub { font-size: 0.78rem; color: var(--sub); margin: 8px 0 18px; line-height: 1.7; }
+  .gstep { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
+  .gstep-n { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 0.82rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .gstep-b { font-size: 0.9rem; line-height: 1.6; padding-top: 2px; }
+  .gstep-b b { font-weight: 700; }
+  .ic-svg { width: 18px; height: 18px; vertical-align: -4px; margin: 0 1px; color: var(--ink); }
+  .gnote { background: rgba(22,22,22,0.04); border-radius: 13px; padding: 12px 14px; font-size: 0.8rem; color: var(--sub); line-height: 1.7; }
+  .gnote b { color: var(--ink); }
+  .guide-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+  .gdots { display: flex; gap: 8px; }
+  .gdot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); border: none; padding: 0; cursor: pointer; }
+  .gdot.on { background: var(--ink); }
+  .gbtn { border: none; background: var(--ink); color: #fff; font-family: inherit; font-weight: 700; font-size: 0.88rem; padding: 12px 26px; border-radius: 999px; cursor: pointer; }
+  .guide-hide { display: block; width: 100%; text-align: center; margin-top: 12px; padding: 4px; background: none; border: none; font-family: inherit; font-size: 0.72rem; color: var(--faint); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -178,6 +220,11 @@
   <div class="add-hint">
     このページを開いたまま <b>「ホーム画面に追加」</b> しておくと、<br>
     ワンタップでLAUNCHのアプリ一覧を開けます。
+    <br>
+    <button class="hint-open" id="guide-open" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></svg>
+      追加のやり方を見る
+    </button>
   </div>
 </main>
 
@@ -185,6 +232,114 @@
   <span class="lb-mark"><svg width="14" height="19" viewBox="0 0 72 96"><use href="#launch-mark"/></svg></span>
   <span class="lb-text">LAUNCH</span>
 </footer>
+
+<!-- ============ ホーム画面追加 & 使い方ガイド（スワイプ式ポップアップ） ============ -->
+<div class="guide-scrim" id="guide" role="dialog" aria-modal="true" aria-label="使い方ガイド">
+  <div class="guide-card">
+    <div class="guide-grip"></div>
+    <div class="guide-top">
+      <button class="guide-close" id="g-close" aria-label="閉じる">×</button>
+    </div>
+    <div class="guide-vp" id="g-vp">
+      <div class="guide-track" id="g-track">
+
+        <!-- スライド1：iPhone -->
+        <div class="guide-slide">
+          <div class="gs-title">iPhone に保存する</div>
+          <div class="gs-sub"><b>Safari</b> でこのページを開いた状態で。</div>
+          <div class="gstep"><span class="gstep-n">1</span><span class="gstep-b">画面下の <b>共有ボタン</b><svg class="ic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8.5 6.5 12 3l3.5 3.5"/><path d="M7 10.5H6.2A2.2 2.2 0 0 0 4 12.7v6.1A2.2 2.2 0 0 0 6.2 21h11.6a2.2 2.2 0 0 0 2.2-2.2v-6.1a2.2 2.2 0 0 0-2.2-2.2H17"/></svg> をタップ</span></div>
+          <div class="gstep"><span class="gstep-n">2</span><span class="gstep-b">少し下にスクロールして <b>「ホーム画面に追加」</b> をタップ</span></div>
+          <div class="gstep"><span class="gstep-n">3</span><span class="gstep-b">右上の <b>「追加」</b> をタップ</span></div>
+          <div class="gnote">ホーム画面に <b>LAUNCH</b> のアイコンができ、アプリのように開けます。</div>
+        </div>
+
+        <!-- スライド2：Android -->
+        <div class="guide-slide">
+          <div class="gs-title">Android に保存する</div>
+          <div class="gs-sub"><b>Chrome</b> でこのページを開いた状態で。</div>
+          <div class="gstep"><span class="gstep-n">1</span><span class="gstep-b">右上の <b>メニュー</b><svg class="ic-svg" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5.5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="18.5" r="1.7"/></svg> をタップ</span></div>
+          <div class="gstep"><span class="gstep-n">2</span><span class="gstep-b"><b>「ホーム画面に追加」</b>（または「アプリをインストール」）をタップ</span></div>
+          <div class="gstep"><span class="gstep-n">3</span><span class="gstep-b">確認が出たら <b>「追加」</b> をタップ</span></div>
+          <div class="gnote">ホーム画面に <b>LAUNCH</b> のアイコンができ、アプリのように開けます。</div>
+        </div>
+
+        <!-- スライド3：左上ロゴ → 動画 -->
+        <div class="guide-slide">
+          <div class="gs-title">
+            <svg class="yt" viewBox="0 0 28.57 20" aria-hidden="true"><path d="M27.9727 3.12324C27.6435 1.89323 26.6768 0.926623 25.4468 0.597366C23.2197 0 14.285 0 14.285 0C14.285 0 5.35042 0 3.12323 0.597366C1.89323 0.926623 0.926623 1.89323 0.597366 3.12324C0 5.35042 0 10 0 10C0 10 0 14.6496 0.597366 16.8768C0.926623 18.1068 1.89323 19.0734 3.12323 19.4026C5.35042 20 14.285 20 14.285 20C14.285 20 23.2197 20 25.4468 19.4026C26.6768 19.0734 27.6435 18.1068 27.9727 16.8768C28.5701 14.6496 28.5701 10 28.5701 10C28.5701 10 28.5701 5.35042 27.9727 3.12324Z" fill="#FF0000"/><path d="M11.4253 14.2854L18.8477 10.0004L11.4253 5.71533V14.2854Z" fill="#fff"/></svg>
+            左上のロゴから動画へ
+          </div>
+          <div class="gs-sub">画面 <b>左上の LAUNCH ロゴ</b>（YouTubeマーク付き）をタップすると、動画が見られます。</div>
+          <div class="gstep"><span class="gstep-n">1</span><span class="gstep-b"><b>このトップ画面</b>では → LAUNCH の <b>YouTubeチャンネル</b>が開きます</span></div>
+          <div class="gstep"><span class="gstep-n">2</span><span class="gstep-b">各アプリの中では → <b>そのアプリの解説動画</b>が開きます</span></div>
+          <div class="gnote">使い方に迷ったら、<b>左上のロゴ</b>から動画で確認できます。</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="guide-foot">
+      <div class="gdots">
+        <button class="gdot on" data-i="0" aria-label="1ページ目へ"></button>
+        <button class="gdot" data-i="1" aria-label="2ページ目へ"></button>
+        <button class="gdot" data-i="2" aria-label="3ページ目へ"></button>
+      </div>
+      <button class="gbtn" id="g-next">次へ</button>
+    </div>
+    <button class="guide-hide" id="g-hide">今後は表示しない</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var scrim = document.getElementById('guide');
+  var track = document.getElementById('g-track');
+  var vp = document.getElementById('g-vp');
+  var nextBtn = document.getElementById('g-next');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.gdot'));
+  var slides = document.querySelectorAll('.guide-slide');
+  var N = slides.length;
+  var i = 0;
+
+  function render() {
+    track.style.transform = 'translateX(' + (-i * 100) + '%)';
+    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
+    nextBtn.textContent = (i < N - 1) ? '次へ' : '閉じる';
+  }
+  function goTo(k) { i = Math.max(0, Math.min(N - 1, k)); render(); }
+  function open(start) { if (typeof start === 'number') i = start; scrim.classList.add('open'); render(); }
+  function close() { scrim.classList.remove('open'); }
+
+  // OS判定：Androidなら2枚目(index1)、それ以外(iPhone等)は1枚目(index0)から
+  function startIndex() { return /android/i.test(navigator.userAgent || '') ? 1 : 0; }
+
+  nextBtn.addEventListener('click', function () { if (i < N - 1) goTo(i + 1); else close(); });
+  dots.forEach(function (d, k) { d.addEventListener('click', function () { goTo(k); }); });
+  document.getElementById('g-close').addEventListener('click', close);
+  scrim.addEventListener('click', function (e) { if (e.target === scrim) close(); });
+  document.getElementById('g-hide').addEventListener('click', function () {
+    try { localStorage.setItem('launch.guideHide', '1'); } catch (e) {}
+    close();
+  });
+  var openBtn = document.getElementById('guide-open');
+  if (openBtn) openBtn.addEventListener('click', function () { open(startIndex()); });
+
+  // スワイプ
+  var x0 = null;
+  vp.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  vp.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) { goTo(dx < 0 ? i + 1 : i - 1); }
+    x0 = null;
+  });
+
+  // 自動表示：すでにホーム画面アプリとして起動中、または「今後は表示しない」を選んだ人には出さない
+  var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  var hidden = false;
+  try { hidden = localStorage.getItem('launch.guideHide') === '1'; } catch (e) {}
+  if (!standalone && !hidden) { setTimeout(function () { open(startIndex()); }, 500); }
+})();
+</script>
 
 </body>
 </html>
