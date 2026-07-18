@@ -11,8 +11,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="168">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161616'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial' font-size='24' font-weight='bold' fill='%23fff' text-anchor='middle'%3E168%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23161616'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial' font-size='24' font-weight='bold' fill='%23fff' text-anchor='middle'%3E168%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161616'/%3E%3Cg transform='translate(17.8,4) scale(0.395)'%3E%3Cpath fill='%23fff' d='M9 31 Q13 24 22 21 L24 13 Q25 9 33 8 L45 9 Q50 11 51 17 Q60 19 63 24 Q64 28 59 28 Q36 20 16 34 Q10 35 9 31 Z'/%3E%3Cpath fill='%23fff' d='M20 44 Q22 37 30 32 L34 43 Q38 34 44 30 Q52 33 55 42 Q60 62 57 91 L14 93 Q10 68 15 52 Q16 47 20 44 Z'/%3E%3Cpath fill='none' stroke='%23161616' stroke-width='2.5' stroke-linecap='round' d='M15 56 Q28 58 35 66 Q39 71 37 77'/%3E%3C/g%3E%3Ctext x='32' y='58' font-family='Helvetica,Arial' font-size='9' font-weight='bold' letter-spacing='0.6' fill='%23fff' text-anchor='middle'%3ELAUNCH%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23161616'/%3E%3Cg transform='translate(17.8,4) scale(0.395)'%3E%3Cpath fill='%23fff' d='M9 31 Q13 24 22 21 L24 13 Q25 9 33 8 L45 9 Q50 11 51 17 Q60 19 63 24 Q64 28 59 28 Q36 20 16 34 Q10 35 9 31 Z'/%3E%3Cpath fill='%23fff' d='M20 44 Q22 37 30 32 L34 43 Q38 34 44 30 Q52 33 55 42 Q60 62 57 91 L14 93 Q10 68 15 52 Q16 47 20 44 Z'/%3E%3Cpath fill='none' stroke='%23161616' stroke-width='2.5' stroke-linecap='round' d='M15 56 Q28 58 35 66 Q39 71 37 77'/%3E%3C/g%3E%3Ctext x='32' y='58' font-family='Helvetica,Arial' font-size='9' font-weight='bold' letter-spacing='0.6' fill='%23fff' text-anchor='middle'%3ELAUNCH%3C/text%3E%3C/svg%3E">
 <style>
   :root {
     --bg: #f4f3f0;
@@ -64,6 +64,7 @@
     font-family: Helvetica, Arial, sans-serif;
     font-weight: 800; font-size: 1.05rem; letter-spacing: 0.16em;
   }
+  .lb-yt { width: 26px; height: 19px; margin-left: 2px; flex-shrink: 0; }
   .hamb {
     background: none; border: none; width: 42px; height: 42px; border-radius: 12px;
     cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink);
@@ -506,6 +507,10 @@
   <a class="launch-brand" href="https://www.youtube.com/@launch-jp" target="_blank" rel="noopener" aria-label="YouTubeチャンネル LAUNCH を開く">
     <svg class="lb-mark"><use href="#launch-mark"/></svg>
     <span class="lb-text">LAUNCH</span>
+    <svg class="lb-yt" viewBox="0 0 28 20" aria-hidden="true">
+      <rect x="0" y="0" width="28" height="20" rx="5" fill="#FF0000"/>
+      <path d="M11 6 L19 10 L11 14 Z" fill="#fff"/>
+    </svg>
   </a>
   <button class="hamb" id="hamb" aria-label="アプリメニュー">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -576,7 +581,7 @@
   <section class="view" id="view-dreams">
     <div class="card">
       <h2>100の夢リスト</h2>
-      <p class="rule-desc">「時間が空いたら、何をやる？」を先に書き出しておくリスト。大きな夢も、小さな楽しみも、思いついたらその場で追加。優先度（高・中・低）をタップで切り替えると、自動で並び替わります。終わったらチェック — 右にスワイプすると「叶えた夢」が見られます。</p>
+      <p class="rule-desc">「時間が空いたら、何をやる？」を先に書き出しておくリスト。大きな夢も、小さな楽しみも、思いついたらその場で追加。優先度（高・中・低）をタップで切り替えると、自動で並び替わります。カレンダーに予定を入れたらチェック — 右にスワイプすると「カレンダーに入力済」が見られます。</p>
       <p class="rule-desc">このタブを開いたまま「ホーム画面に追加」すると、空いた瞬間にワンタップでこのリストが開きます。</p>
       <div class="dream-count" id="dream-count"></div>
       <div class="cat-add">
@@ -585,7 +590,7 @@
       </div>
       <div class="swipe-pager" id="dream-pager">
         <button type="button" data-pane="0" class="active" id="pager-active">やりたいこと</button>
-        <button type="button" data-pane="1" id="pager-done">叶えた夢</button>
+        <button type="button" data-pane="1" id="pager-done">入力済</button>
       </div>
       <div class="swipe-panes" id="dream-panes">
         <div class="swipe-pane" id="dream-rows"></div>
@@ -1190,7 +1195,7 @@ function renderDreams() {
   let sub;
   if (total === 0) sub = "まずは10個から";
   else if (total < 10) sub = `まずは10個から — あと ${10 - total} 個`;
-  else sub = `最初の10個 達成` + (doneCount > 0 ? ` ・ 叶えた夢 ${doneCount}` : "");
+  else sub = `最初の10個 達成` + (doneCount > 0 ? ` ・ 入力済 ${doneCount}` : "");
   const dots = total < 10
     ? `<div class="progress-dots">${Array.from({ length: 10 }, (_, i) => `<span class="${i < total ? "done" : ""}"></span>`).join("")}</div>`
     : "";
@@ -1202,7 +1207,7 @@ function renderDreams() {
   const byPri = (a, b) => (b.p - a.p) || (a.t - b.t);
   const rowHtml = d => `
     <div class="dream-row ${d.done ? "done" : ""}" data-id="${d.id}">
-      <button type="button" class="dream-check" aria-label="${d.done ? "未達成に戻す" : "達成にする"}">✓</button>
+      <button type="button" class="dream-check" aria-label="${d.done ? "入力前に戻す" : "カレンダーに入力済にする"}">✓</button>
       <span class="dream-text">${esc(d.text)}</span>
       <button type="button" class="dream-pri p${d.p}" aria-label="優先度を変更（現在：${PRI_LABEL[d.p]}）">${PRI_LABEL[d.p]}</button>
       <button type="button" class="dream-del" aria-label="削除">×</button>
@@ -1210,13 +1215,13 @@ function renderDreams() {
   const active = dreams.filter(d => !d.done).sort(byPri);
   const done = dreams.filter(d => d.done).sort(byPri);
   $("#pager-active").textContent = `やりたいこと ${active.length}`;
-  $("#pager-done").textContent = `叶えた夢 ${done.length}`;
+  $("#pager-done").textContent = `入力済 ${done.length}`;
   $("#dream-rows").innerHTML = active.length
     ? active.map(rowHtml).join("")
     : `<p class="empty-note">最初のひとつを書いてみましょう。<br>「本を1冊読み切る」くらい小さくてOKです。</p>`;
   $("#dream-done-rows").innerHTML = done.length
     ? done.map(rowHtml).join("")
-    : `<p class="empty-note">チェックを付けた夢が、ここに移動します。</p>`;
+    : `<p class="empty-note">カレンダーに予定を入れた夢が、<br>ここに移動します。</p>`;
 }
 
 $("#dream-panes").addEventListener("click", (e) => {
@@ -1496,7 +1501,7 @@ function buildMenu() {
   $("#menu-mine").innerHTML = mine.map(a => rowHtml(a)).join("");
   $("#menu-catalog").innerHTML = catalog.length
     ? catalog.map(a => rowHtml(a, true)).join("")
-    : `<p class="menu-empty">新しい本のツールは、<br>これからここに増えていきます。<br>Coming Soon...</p>`;
+    : `<p class="menu-empty">Coming Soon...</p>`;
 }
 
 const openMenu = () => document.body.classList.add("menu-open");
