@@ -5,7 +5,7 @@
    ============================================================ */
 
 // ▼ Cloudflare Worker のURL（デプロイ後に差し替える）
-const WORKER_URL = 'https://launch-push.example.workers.dev';
+const WORKER_URL = 'https://launch-push.launch-jp.workers.dev';
 
 const FALLBACK = {
   title: 'LAUNCH',
